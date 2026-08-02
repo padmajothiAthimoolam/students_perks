@@ -19,7 +19,7 @@ export default function MonthlyReport({ entries, students, title = "Credits and 
 
   function downloadCsv() {
     const rows = [["Date", "Student", "Subject", "Marks", "Maximum", "Percentage", "Credits"], ...reportEntries.map((entry) => [entry.date, studentNames[entry.studentId] ?? "Student", entry.subject, entry.marks, entry.maximumMarks, entry.percentage, entry.credits])];
-    const csv = rows.map((row) => row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(",")).join("\n");
+    const csv = rows.map((row) => row.map((value) => `"${String(value).replace(/"/g, '""')}"`).join(",")).join("\n");
     const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
     const anchor = document.createElement("a"); anchor.href = url; anchor.download = `student-rewards-report-${selectedMonth}.csv`; anchor.click(); URL.revokeObjectURL(url);
   }
